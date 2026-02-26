@@ -1109,6 +1109,90 @@ button {
   right: 0;
   top: 60px;
 }
+/* ===== REVIEWS SLIDER (FINAL CLEAN) ===== */
+
+.reviews-slider {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* swiper базово */
+.reviews-slider .swiper-wrapper {
+  align-items: stretch;
+}
+
+.reviews-slider .swiper-slide {
+  height: auto;
+}
+
+/* карточки */
+.reviews-slider .photo {
+  display: block;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.16);
+}
+
+.reviews-slider img {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  display: block;
+}
+
+/* стрелки */
+.reviews-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(111, 107, 177, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 6;
+  cursor: pointer;
+}
+
+.reviews-arrow::before {
+  content: "";
+  width: 9px;
+  height: 9px;
+  border-top: 2px solid #6f6bb1;
+  border-right: 2px solid #6f6bb1;
+}
+
+.reviews-arrow.prev { left: 12px; }
+.reviews-arrow.prev::before { transform: rotate(-135deg); }
+
+.reviews-arrow.next { right: 12px; }
+.reviews-arrow.next::before { transform: rotate(45deg); }
+
+/* пагинация */
+.reviews-pagination {
+  margin-top: 14px;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.reviews-pagination .swiper-pagination-bullet-active {
+  background: #6f6bb1;
+}
+/* 🔒 ЖЁСТКО скрываем слайдер на desktop */
+.reviews-slider {
+  display: none !important;
+}
+
+.reviews-pagination {
+  display: none !important;
+}
+
+
 
 .home-blog {
   padding: 0 20px 80px;
@@ -1227,6 +1311,46 @@ button {
   text-decoration: underline;
   text-underline-offset: 5px;
   width: fit-content;
+}
+
+/* === SHARP FIX: home blog images (desktop only) === */
+
+.home-blog__image {
+  /* оставляем тот же вид */
+  background: #f4f5f8;
+
+  /* улучшает рендеринг */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.home-blog__image img {
+  /* сохраняем размеры блока */
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+
+  object-fit: contain;
+
+  /* УБИРАЕМ микромыло */
+  image-rendering: auto;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+
+  /* лёгкая визуальная резкость */
+  filter: contrast(1.02) saturate(1.02);
+
+  /* плавнее чем scale */
+  transition: transform 0.4s ease, filter 0.3s ease;
+}
+
+/* МЯГКИЙ hover вместо blur-scale */
+.home-blog__image:hover img,
+.home-blog__post:hover img {
+  transform: scale(1.025); /* было 1.05 — это мыло */
+  filter: contrast(1.04) saturate(1.03);
 }
 
 .patterns-drop {
@@ -1401,6 +1525,23 @@ button {
   text-decoration: none;
   color: inherit;
   display: block;
+}
+
+/* =====================================
+   DESKTOP SHARP FIX — ZERO VISUAL CHANGE
+   patterns-drop
+   ===================================== */
+
+.pattern-card__image img {
+  /* улучшение рендера без влияния на layout */
+  backface-visibility: hidden;
+  transform: translateZ(0);
+
+  /* нормализация сглаживания */
+  image-rendering: auto;
+
+  /* убирает Chrome GPU blur при transform */
+  will-change: transform;
 }
 
 .site-footer {

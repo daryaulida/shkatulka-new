@@ -432,6 +432,8 @@
   }
 }
 
+
+
 @media (max-width: 1024px) {
   .home-categories__wrap {
     padding: 0 clamp(18px, 3vw, 20px);
@@ -605,10 +607,8 @@
     gap: clamp(2rem, 5vw, 3rem);
   }
 
-  .about-brand__image {
-    order: -1;
-    width: min(100%, 32rem);
-    aspect-ratio: 2 / 3;
+  .about-brand__media {
+    display: none;
   }
 
   .about-brand__content {
@@ -752,7 +752,11 @@
   }
 }
 
+/* ===== REVIEWS ADAPTIVE (SWIPER SAFE) ===== */
+
+/* ===== TABLET (480–767) ===== */
 @media (max-width: 767px) and (min-width: 480px) {
+
   .reviews {
     padding-top: 0;
     padding-bottom: clamp(32px, 8vw, 44px);
@@ -764,32 +768,59 @@
     gap: clamp(28px, 6vw, 40px);
   }
 
-  .reviews-photos {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: clamp(12px, 3vw, 18px);
-  }
-
-  .reviews-photos .photo {
-    position: static;
-    width: 100%;
-    transform: none;
-    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.16);
-  }
-
-  .reviews-photos .photo-3 {
-    grid-column: 1 / -1;
-    width: calc(50% - clamp(6px, 1.5vw, 9px));
-    justify-self: center;
-  }
-
   .reviews-left {
     text-align: center;
     align-items: center;
   }
 }
 
+
+
+
+
+/* ===== SMALL PHONES (≤375) ===== */
+@media (max-width: 375px) {
+  .reviews .collections-title {
+    font-size: 26px;
+  }
+}
+
+@media (max-width: 768px) {
+
+  .reviews-photos {
+    display: none;
+  }
+
+  .reviews-slider {
+    display: block !important;
+    width: 100%;
+    min-width: 0; /* 🔥 фикс swiper внутри grid */
+  }
+
+  .reviews-pagination {
+    display: flex !important;
+    width: 100%;
+    justify-content: center; /* 🔥 чтобы точки не уезжали */
+  }
+
+  /* 🔥 ВОТ ГЛАВНЫЙ ФИКС */
+  .reviews-inner {
+    display: flex;
+    flex-direction: column;
+    padding-inline: clamp(16px, 5vw, 32px);
+    gap: 16px !important; /* ← УБИВАЕТ ПУСТОТУ */
+  }
+
+    .reviews-pagination {
+    margin-top: 10px !important;
+  }
+
+  
+}
+
+/* ===== MOBILE (≤479) ===== */
 @media (max-width: 479px) {
+
   .reviews {
     padding-top: 0;
     padding-bottom: clamp(30px, 9vw, 40px);
@@ -800,19 +831,6 @@
     flex-direction: column;
     gap: clamp(26px, 7vw, 36px);
     padding-inline: clamp(14px, 5.5vw, 22px);
-  }
-
-  .reviews-photos {
-    display: flex;
-    flex-direction: column;
-    gap: clamp(14px, 5vw, 20px);
-  }
-
-  .reviews-photos .photo {
-    position: static;
-    width: 100%;
-    transform: none;
-    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.16);
   }
 
   .reviews-left {
@@ -826,21 +844,20 @@
     margin-bottom: 0;
   }
 
-  @media (max-width: 375px) {
-    .reviews .collections-title {
-      font-size: 26px;
-    }
-  }
-
   .reviews-btn {
     width: 100%;
     justify-content: center;
     padding: clamp(10px, 3.5vw, 12px) 18px;
     font-size: clamp(12px, 4vw, 13px);
-
     margin-top: clamp(12px, 3.5vw, 18px);
   }
+
+        .reviews-pagination {
+    margin-top: 0 !important;
+  }
 }
+
+
 
 @media (max-width: 1024px) {
   .home-blog {
@@ -955,6 +972,74 @@
 @media (max-width: 375px) {
   .home-blog__title {
     font-size: 26px;
+  }
+}
+
+/* ===============================
+   SHARP FIX — adaptive images
+   =============================== */
+
+/* <=1024px — убираем GPU blur */
+@media (max-width: 1024px) {
+  .home-blog__image img {
+    backface-visibility: hidden;
+    transform: translateZ(0);
+    image-rendering: auto;
+
+    /* лёгкая компенсация Retina blur */
+    filter: contrast(1.03) saturate(1.02);
+  }
+
+  .home-blog__image:hover img,
+  .home-blog__post:hover img {
+    transform: scale(1.02); /* меньше чем на десктопе */
+  }
+}
+
+/* <=800px — уменьшаем blur от contain */
+@media (max-width: 800px) {
+  .home-blog__image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .home-blog__image img {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+
+    /* главный фикс мобильного мыла */
+    transform: translateZ(0);
+    filter: contrast(1.04) saturate(1.03);
+  }
+}
+
+/* <=480px — Retina спасение */
+@media (max-width: 480px) {
+  .home-blog__image img {
+    /* самый сильный anti-blur */
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+
+    filter: contrast(1.06) saturate(1.04);
+
+    /* убираем лишний upscale */
+    will-change: transform;
+  }
+
+  /* минимальный hover чтобы не мылить */
+  .home-blog__image:hover img,
+  .home-blog__post:hover img {
+    transform: scale(1.015);
+  }
+}
+
+/* ultra small phones */
+@media (max-width: 375px) {
+  .home-blog__image img {
+    filter: contrast(1.08) saturate(1.05);
   }
 }
 
@@ -1073,6 +1158,35 @@
     text-align: center;
     padding: clamp(10px, 3.5vw, 12px) 18px;
     font-size: clamp(12px, 4vw, 13px);
+  }
+}
+
+
+@media (max-width: 1024px) {
+  .pattern-card__image img {
+    backface-visibility: hidden;
+    transform: translateZ(0);
+    image-rendering: auto;
+    will-change: transform;
+  }
+}
+
+
+@media (max-width: 480px) {
+  .pattern-card__image img {
+    backface-visibility: hidden;
+    transform: translateZ(0);
+
+
+    image-rendering: -webkit-optimize-contrast;
+
+    will-change: transform;
+  }
+}
+
+@media (max-width: 375px) {
+  .pattern-card__image img {
+    image-rendering: crisp-edges;
   }
 }
 
