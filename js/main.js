@@ -77,6 +77,30 @@ if (reviews && typeof Swiper !== "undefined") {
   });
 }
 
+const patternsSlider = document.querySelector(".patterns-drop__slider");
+
+if (patternsSlider && typeof Swiper !== "undefined") {
+  new Swiper(patternsSlider, {
+    slidesPerView: 1,
+    spaceBetween: 16,
+    grabCursor: true,
+
+    navigation: {
+      nextEl: ".patterns-drop__arrow.next",
+      prevEl: ".patterns-drop__arrow.prev",
+    },
+
+    pagination: {
+      el: ".patterns-drop__pagination",
+      clickable: true,
+    },
+
+    breakpoints: {
+      481: { slidesPerView: 2 }, // строго как reviews
+    },
+  });
+}
+
   const burger = document.querySelector(".burger");
   const menu = document.querySelector(".mobile-menu");
   const overlay = document.querySelector(".menu-overlay");

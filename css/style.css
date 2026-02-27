@@ -92,6 +92,8 @@ button {
 .logo {
   height: 80%;
   width: auto;
+  max-width: 250px;        /* <= добавь */
+  max-height: 100%;        /* <= добавь */
   object-fit: contain;
   display: block;
 }
@@ -340,207 +342,7 @@ button {
   }
 }
 
-.header {
-  position: sticky;
-  top: 0;
-  width: 100%;
-  height: 56px;
-  background: #6f6c9e;
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  padding: 0 12px;
-  z-index: 1000;
-}
 
-.header > .burger {
-  justify-self: start;
-}
-
-.header > .icons {
-  justify-self: end;
-}
-
-.burger {
-  width: 22px;
-  height: 16px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-}
-.burger span {
-  display: block;
-  width: 100%;
-  height: 2px;
-  background: #fff;
-  border-radius: 2px;
-}
-
-.logo-link {
-  height: 90%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.logo {
-  height: 90%;
-  width: auto;
-  object-fit: contain;
-  display: block;
-}
-
-.icons {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  text-decoration: none;
-  background: none;
-  border: none;
-  cursor: pointer;
-}
-.icon:link,
-.icon:visited {
-  color: inherit;
-}
-.icon img {
-  width: 20px;
-  height: 20px;
-  display: block;
-  filter: brightness(0) invert(1);
-  pointer-events: none;
-}
-
-.menu-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.35);
-  opacity: 0;
-  pointer-events: none;
-  transition: 0.3s ease;
-  z-index: 999;
-}
-.menu-overlay.open {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.mobile-menu {
-  position: fixed;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  max-width: 420px;
-  height: 100vh;
-  background: #f4f4f4;
-  overflow-y: auto;
-  transition: 0.4s cubic-bezier(0.4, 0.2, 0.2, 1);
-  z-index: 1000;
-}
-.mobile-menu.open {
-  left: 0;
-}
-
-.menu-close {
-  position: absolute;
-  top: 20px;
-  left: 16px;
-  font-size: 26px;
-  background: none;
-  border: none;
-  cursor: pointer;
-}
-
-.menu-content {
-  padding: 64px 16px 36px;
-}
-
-.menu-tabs {
-  display: flex;
-  gap: 6px;
-  margin-bottom: 24px;
-  flex-wrap: wrap;
-}
-
-.menu-tab {
-  padding: 6px 12px;
-  border: 1px solid #6f6bb1;
-  background: transparent;
-  color: #6f6bb1;
-  font-size: 14px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.menu-tab.active {
-  background: #6f6bb1;
-  color: #fff;
-}
-
-.menu-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 24px;
-}
-
-.menu-col a {
-  display: block;
-  margin-bottom: 14px;
-  font-size: 16px;
-  color: #121722;
-}
-
-.menu-links a {
-  display: block;
-  margin-bottom: 14px;
-  font-size: 16px;
-  color: #121722;
-}
-
-.menu-divider {
-  height: 2px;
-  background: #6f6bb1;
-  margin: 24px 0;
-}
-
-.menu-contact span {
-  display: block;
-  font-size: 14px;
-  margin-bottom: 8px;
-}
-.menu-contact a {
-  font-size: 17px;
-  color: #6f6bb1;
-  letter-spacing: 2px;
-}
-
-.menu-panel {
-  display: none;
-  animation: fadeIn 0.25s ease;
-}
-.menu-panel.active {
-  display: block;
-}
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(6px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 
 .collections {
   padding: clamp(24px, 4vw, 40px) 0 clamp(24px, 4vw, 40px);
@@ -1395,8 +1197,8 @@ button {
 
 .patterns-drop__grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr); /* ← 5 В РЯД */
-  gap: clamp(18px, 2.4vw, 28px); /* меньше воздуха */
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(20px, 3vw, 32px);
 }
 
 .pattern-card {
@@ -1408,39 +1210,35 @@ button {
 .pattern-card__image {
   position: relative;
   width: 100%;
-  aspect-ratio: 2 / 3;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  aspect-ratio: 2 / 3;
 
   overflow: hidden;
   margin-bottom: 12px;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.08);
 
-  /* УБРАЛИ фон и карточку */
-  box-shadow: none;
+  transition: box-shadow 0.35s ease;
 }
 
 .pattern-card__image img {
-  width: auto;        /* ← НЕ растягиваем */
-  height: auto;       /* ← НЕ растягиваем */
-
-  max-width: 100%;    /* но влезают в карточку */
-  max-height: 100%;
+  width: 100%;
+  height: 100%;
 
   object-fit: contain;
   object-position: center;
 
-  transform: translateZ(0); /* анти-мыло */
+  background: #f4f5f8;
+
+  transform: scale(1);
+  transition: transform 0.7s cubic-bezier(0.2, 0.6, 0.2, 1);
 }
 
 .pattern-card:hover .pattern-card__image img {
-  transform: scale(1.04);
-  transition: transform 0.4s ease;
+  transform: scale(1.06);
 }
 
 .pattern-card:hover .pattern-card__image {
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.12);
 }
 
 .pattern-card__label {
@@ -1546,6 +1344,81 @@ button {
 
   /* убирает Chrome GPU blur при transform */
   will-change: transform;
+}
+
+/* ===== PATTERNS SLIDER (reviews clone SAFE) ===== */
+
+/* =====================================
+   PATTERNS SLIDER BASE VISIBILITY
+===================================== */
+
+/* 🔥 по умолчанию скрыт (desktop) */
+.patterns-drop__slider {
+  display: none;
+}
+
+.patterns-drop__pagination {
+  display: none;
+}
+
+.patterns-drop__slider {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* swiper base */
+.patterns-drop__slider .swiper-wrapper {
+  align-items: stretch;
+}
+
+.patterns-drop__slider .swiper-slide {
+  height: auto;
+}
+
+/* карточки остаются твои (не трогаем pattern-card) */
+
+
+/* ===== ARROWS (копия reviews) ===== */
+.patterns-drop__arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(111, 107, 177, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 6;
+  cursor: pointer;
+}
+
+.patterns-drop__arrow::before {
+  content: "";
+  width: 9px;
+  height: 9px;
+  border-top: 2px solid #6f6bb1;
+  border-right: 2px solid #6f6bb1;
+}
+
+.patterns-drop__arrow.prev { left: 12px; }
+.patterns-drop__arrow.prev::before { transform: rotate(-135deg); }
+
+.patterns-drop__arrow.next { right: 12px; }
+.patterns-drop__arrow.next::before { transform: rotate(45deg); }
+
+
+.patterns-drop__pagination {
+  margin-top: 14px;
+  justify-content: center;
+  gap: 8px;
+}
+
+.patterns-drop__pagination .swiper-pagination-bullet-active {
+  background: #6f6bb1;
 }
 
 .site-footer {
